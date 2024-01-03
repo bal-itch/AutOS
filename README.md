@@ -1,10 +1,14 @@
-# win10-regtweaks
-This repository contains useful Windows 10 registry tweaks and post-install scripts that we (HIDEN64 & nitrate92) both use. If you consider using the reg files, **please read the code comments before running it on your system. This script collection comes with no warranty.** It contains important tweaks we use on freshly installed copies of Windows to do the following:
+# AutOS
+This repository contains post-install scripts, registry tweaks for Windows, and dotfiles that we (HIDEN64 & nitrate92) both use. **Please read the code comments before using these. This script collection comes with no warranty.** We use these on freshly installed operating systems to do the following, among other things:
 
-* Change OS settings in one click
-* Disable components of the operating system that phone home to Microsoft
+* Change settings and install programs in one click
+* Disable Windows components that phone home to Microsoft
+* Have a place to share and easily keep track of our dotfiles
 
-To see individual tweaks, look under the "registry-extras" directory.
-There are also extra scripts that are for more broad purposes than our post-install scripts. Those can be found in the "script-extras" directory.
-# Usage
+Extra registry tweaks (for Windows) and scripts can be found in their respective "extras" directories.
+
+# Usage (Windows)
 Simply double click the .reg files and click OK to apply them. Additionally, we have additional scripts that can be run from an admin PowerShell console. It's set up to install applications, and uninstall Appx packages, although they vary because we have different preferences. **Read the contents of the files before proceeding!** You are also encouraged to modify the arrays inside the script to fit your own needs.
+
+# Usage (Linux)
+*Soon™*
