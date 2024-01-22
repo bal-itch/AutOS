@@ -1,7 +1,46 @@
 # HIDEN's Windows 10 post-install script.
 
 # 9p7knl5rwt25 = sysinternals, 9N0DX20HK701 = windows terminal
-$wingetPackages = "Microsoft.PowerToys", "9p7knl5rwt25", "7zip.7zip", "9N0DX20HK701", "VSCodium.VSCodium", "Librewolf.Librewolf", "eloston.ungoogled-chromium", "Valve.Steam", "Discord.Discord", "CrystalDewWorld.CrystalDiskInfo", "RealVNC.VNCViewer", "WiresharkFoundation.Wireshark", "Git.Git", "GitHub.GitHubDesktop", "AngusJohnson.ResourceHacker", "BleachBit.BleachBit", "Bitwarden.Bitwarden", "Notepad++.Notepad++", "Python.Python.3.11", "Microsoft.DotNet.SDK.8", "Element.Element", "Telerik.Fiddler.Classic", "Telegram.TelegramDesktop", "VMware.WorkstationPro", "EpicGames.EpicGamesLauncher", "dotPDNLLC.paintdotnet", "DuongDieuPhap.ImageGlass", "ShareX.ShareX", "OBSProject.OBSStudio", "Spotify.Spotify", "Nvidia.GeForceExperience", "qBittorrent.qBittorrent", "Microsoft.PowerShell", "StartIsBack.StartIsBack", "Mojang.MinecraftLauncher", "CodecGuide.KLiteCodecPack.Mega", "yt-dlp.yt-dlp", "cURL.cURL", "GNU.Wget2"
+$wingetPackages = "Microsoft.PowerToys",
+"9p7knl5rwt25",
+"7zip.7zip",
+"9N0DX20HK701",
+"VSCodium.VSCodium",
+"Librewolf.Librewolf",
+"eloston.ungoogled-chromium",
+"Valve.Steam",
+"Discord.Discord",
+"CrystalDewWorld.CrystalDiskInfo",
+"RealVNC.VNCViewer",
+"WiresharkFoundation.Wireshark",
+"Git.Git",
+"GitHub.GitHubDesktop",
+"AngusJohnson.ResourceHacker",
+"BleachBit.BleachBit",
+"Bitwarden.Bitwarden",
+"Notepad++.Notepad++",
+"Python.Python.3.11",
+"Microsoft.DotNet.SDK.8",
+"Element.Element",
+"Telerik.Fiddler.Classic",
+"Telegram.TelegramDesktop",
+"VMware.WorkstationPro",
+"EpicGames.EpicGamesLauncher",
+"dotPDNLLC.paintdotnet",
+"DuongDieuPhap.ImageGlass",
+"ShareX.ShareX",
+"OBSProject.OBSStudio",
+"Spotify.Spotify",
+"Nvidia.GeForceExperience",
+"qBittorrent.qBittorrent",
+"Microsoft.PowerShell",
+"StartIsBack.StartIsBack",
+"Mojang.MinecraftLauncher",
+"CodecGuide.KLiteCodecPack.Mega",
+"yt-dlp.yt-dlp",
+"cURL.cURL",
+"GNU.Wget2"
+
 $chocolateyPackages = "tenacity", "photogimp", "handbreak", "inkscape", "blender", "libreoffice-fresh"
 
 # 549981C3F5F10 = Cortana
@@ -34,8 +73,8 @@ foreach ($package in $chocolateyPackages) {
 	choco install $package -y # "-y" probably isn't needed, but oh well.
 }
 
-[console]::beep(500,500)		# Beep when complete; a self reminder
-[console]::beep(500,500)
+[console]::beep(500, 500)		# Beep when complete; a self reminder
+[console]::beep(500, 500)
 
 Read-Host "NOTE: This next step will uninstall any pre-installed Appx package that is not essential for Windows to function at all. (i.e: everything but Settings and Security and required libs)"
 Read-Host "Go into the script's source code, and remove any app you want to keep from the array."
@@ -49,7 +88,7 @@ foreach ($appx in $appxToRemove) {
 	Get-AppXProvisionedPackage -Online | Where-Object DisplayName -eq $appx | Remove-AppxProvisionedPackage -Online
 }
 
-[console]::beep(500,500)
-[console]::beep(500,500)
+[console]::beep(500, 500)
+[console]::beep(500, 500)
 
 Read-Host -Prompt "Done, press any key to exit"
