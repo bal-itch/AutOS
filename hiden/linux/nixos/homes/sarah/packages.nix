@@ -9,10 +9,10 @@
     libsForQt5.kdenlive
     obs-studio
     plexamp
+    qbittorrent-qt5
     spotify
     steam
     telegram-desktop
-    transmission-qt
     vesktop
     vscodium
     winetricks

@@ -154,7 +154,7 @@
   };
   boot.initrd.systemd.enable = true;
   boot.supportedFilesystems = [ "exfat" "ntfs" "xfs" "btrfs"];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_lqx;
   boot.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.blacklistedKernelModules = [ "nouveau" ];
 
@@ -163,6 +163,9 @@
 
   # Set a time zone, idiot
   time.timeZone = "America/Chicago";
+
+  # Use local time for the hardware clock, because Windows sucks
+  time.hardwareClockInLocalTime = true;
 
   # Fun internationalisation stuffs (AAAAAAAA)
   i18n.defaultLocale = "en_US.UTF-8";
