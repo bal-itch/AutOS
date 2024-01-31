@@ -138,10 +138,10 @@
  
   console.useXkbConfig = true;
 
-  # TODO: Set your hostname
+  # Hostname
   networking.hostName = "typhoon";
 
-  # TODO: This is just an example, be sure to use whatever bootloader you prefer.
+  # Bootloader
   boot.loader = {
     efi.canTouchEfiVariables = true;
     efi.efiSysMountPoint = "/boot";
