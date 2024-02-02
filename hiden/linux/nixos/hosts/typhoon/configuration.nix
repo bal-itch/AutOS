@@ -160,6 +160,7 @@
 
   # enable networking
   networking.networkmanager.enable = true;
+  networking.nameservers = ["192.168.40.66"]; # pihole
 
   # Set a time zone, idiot
   time.timeZone = "America/Chicago";
@@ -218,6 +219,38 @@
     PermitRootLogin = "no";
     # Use keys only. Remove if you want to SSH using password (not recommended)
     #PasswordAuthentication = False;
+  };
+
+  # Samba, I really don't want to put this in the main configuration, but oh well
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    extraConfig = ''
+      workgroup = WORKGROUP
+      # who needs security anyway? (i love networking with Windows XP machines)
+      min protocol = NT1
+      client min protocol = NT1
+      server string = typhoon
+      netbios name = typhoon
+      security = user 
+      # note: localhost is an alias for ipv6's localhost address (::1)
+      hosts allow = 192.168.40. 127.0.0.1 localhost
+      hosts deny = 0.0.0.0/0
+      guest account = nobody
+      map to guest = bad user
+    '';
+    shares = {
+      private = {
+        path = "/run/media/sarah/External Drive/";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "username";
+        "force group" = "groupname";
+      };
+    };
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
