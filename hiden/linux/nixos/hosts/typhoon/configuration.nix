@@ -236,7 +236,7 @@
       # note: localhost is an alias for ipv6's localhost address (::1)
       hosts allow = 192.168.40. 127.0.0.1 localhost
       hosts deny = 0.0.0.0/0
-      guest account = nobody
+      guest account = sarah
       map to guest = bad user
     '';
     shares = {
