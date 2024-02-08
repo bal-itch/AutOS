@@ -19,7 +19,7 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Breeze-Dark";
+      name = "Breeze";
       package = pkgs.libsForQt5.breeze-gtk;
     };
   };
