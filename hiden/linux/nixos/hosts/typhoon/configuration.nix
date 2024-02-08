@@ -205,7 +205,7 @@
   users.users.sarah = {
     isNormalUser = true;
     description = "sarah";
-    extraGroups = ["networkmanager" "wheel" "adbusers"];
+    extraGroups = ["networkmanager" "libvirtd" "wheel" "adbusers"];
     openssh.authorizedKeys.keys = [
       # TODO: Add SSH public key(s) here
     ];
@@ -222,39 +222,43 @@
   };
 
   # Samba, I really don't want to put this in the main configuration, but oh well
-  # TODO: Actually make this work
-  #services.samba = {
-  #  enable = true;
-  #  openFirewall = true;
-  #  extraConfig = ''
-  #    workgroup = WORKGROUP
-  #    # who needs security anyway? (i love networking with Windows XP machines)
-  #    min protocol = NT1
-  #    client min protocol = NT1
-  #    server string = typhoon
-  #    netbios name = typhoon
-  #    security = user 
-  #    # note: localhost is an alias for ipv6's localhost address (::1)
-  #    hosts allow = 192.168.40. 127.0.0.1 localhost
-  #    hosts deny = 0.0.0.0/0
-  #    guest account = nobody
-  #    map to guest = Bad User
-  #  '';
-  #  shares = {
-  #    public = {
-  #      path = "/run/media/sarah/External Drive/";
-  #      browseable = "yes";
-  #      writeable = "yes";
-  #      public = "yes";
-  #      "read only" = "no";
-  #      "guest ok" = "yes";
-  #      "create mask" = "0666";
-  #      "directory mask" = "0777";
-  #      "force user" = "username";
-  #      "force group" = "groupname";
-  #    };
-  #  };
-  #};
+  # this is broken, i don't really care right now
+  services.samba = {
+    enable = true;
+    securityType = "user";
+    openFirewall = true;
+    extraConfig = ''
+      workgroup = WORKGROUP
+      # who needs security anyway? (i love networking with Windows XP machines)
+      min protocol = NT1
+      client min protocol = NT1
+      server string = typhoon
+      netbios name = typhoon
+      security = user 
+      # note: localhost is an alias for ipv6's localhost address (::1)
+      hosts allow = 192.168.40. 127.0.0.1 localhost
+      hosts deny = 0.0.0.0/0
+      guest account = nobody
+      map to guest = Bad User
+    '';
+    shares = {
+      private = {
+        path = "/run/media/sarah/External Drive/";
+        browseable = "yes";
+        writeable = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0666";
+        "directory mask" = "0777";
+        "force user" = "sarah";
+      };
+    };
+  };
+
+  # VMware and QEMU/KVM
+  virtualisation.vmware.host.enable = true;
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";
