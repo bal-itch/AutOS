@@ -5,7 +5,7 @@
 <#  Now seperated by line, because I felt like it
     9p7knl5rwt25 = sysinternals
     9N0DX20HK701 = windows terminal #>
-$theShitWinget = <# "Microsoft.PowerToys",
+$theShitWinget = "Microsoft.PowerToys",
 "9p7knl5rwt25",
 "7zip.7zip",
 "9N0DX20HK701",
@@ -32,7 +32,7 @@ $theShitWinget = <# "Microsoft.PowerToys",
 "yt-dlp.yt-dlp",
 "cURL.cURL",
 "GNU.Wget2",
-"Python.Python.3.11", #>
+"Python.Python.3.11",
 "qBittorrent.qBittorrent"
 
 # 549981C3F5F10 = Cortana
