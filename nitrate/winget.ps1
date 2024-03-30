@@ -5,7 +5,7 @@
 <#  Now seperated by line, because I felt like it
     9p7knl5rwt25 = sysinternals
     9N0DX20HK701 = windows terminal #>
-$theShitWinget = "Microsoft.PowerToys",
+$theShitWinget = <# "Microsoft.PowerToys",
 "9p7knl5rwt25",
 "7zip.7zip",
 "9N0DX20HK701",
@@ -24,6 +24,7 @@ $theShitWinget = "Microsoft.PowerToys",
 "KeePassXCTeam.KeePassXC",
 "RaspberryPiFoundation.RaspberryPiImager",
 "ShareX.ShareX",
+"Mobatek.MobaXterm",
 "OBSProject.OBSStudio",
 "Insecure.Npcap",
 "LIGHTNINGUK.ImgBurn",
@@ -31,7 +32,8 @@ $theShitWinget = "Microsoft.PowerToys",
 "yt-dlp.yt-dlp",
 "cURL.cURL",
 "GNU.Wget2",
-"Python.Python.3.11"
+"Python.Python.3.11", #>
+"qBittorrent.qBittorrent"
 
 # 549981C3F5F10 = Cortana
 $theShitUWP = "Microsoft.WindowsCamera", "Microsoft.ZuneMusic", "Microsoft.Xbox.TCUI", "Microsoft.XboxGameOverlay", "Microsoft.XboxGamingOverlay", "Microsoft.XboxIdentityProvider", "Microsoft.XboxSpeechToTextOverlay", "Microsoft.WindowsMaps", "Microsoft.People", "Microsoft.549981C3F5F10", "Microsoft.YourPhone"
@@ -42,6 +44,36 @@ if (-not $elevated) {
   exit
 }
 
+# This code belongs to Den Delimarsky, props to him
+function Show-Notification {
+  [cmdletbinding()]
+  Param (
+      [string]
+      $ToastTitle,
+      [string]
+      [parameter(ValueFromPipeline)]
+      $ToastText
+  )
+
+  [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > $null
+  $Template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02)
+
+  $RawXml = [xml] $Template.GetXml()
+  ($RawXml.toast.visual.binding.text|Where-Object {$_.id -eq "1"}).AppendChild($RawXml.CreateTextNode($ToastTitle)) > $null
+  ($RawXml.toast.visual.binding.text|Where-Object {$_.id -eq "2"}).AppendChild($RawXml.CreateTextNode($ToastText)) > $null
+
+  $SerializedXml = New-Object Windows.Data.Xml.Dom.XmlDocument
+  $SerializedXml.LoadXml($RawXml.OuterXml)
+
+  $Toast = [Windows.UI.Notifications.ToastNotification]::new($SerializedXml)
+  $Toast.Tag = "PowerShell"
+  $Toast.Group = "PowerShell"
+  $Toast.ExpirationTime = [DateTimeOffset]::Now.AddMinutes(1)
+
+  $Notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("PowerShell")
+  $Notifier.Show($Toast);
+}
+
 Write-Host "The following will be installed:"
 foreach ($package in $theShitWinget) {
   Write-Host "$package" -ForegroundColor Yellow
@@ -50,8 +82,7 @@ Read-Host -Prompt "Press any key to continue"
 foreach ($package in $theShitWinget) {
   winget install $package --accept-package-agreements
 }
-[console]::beep(500, 500)        # Beep when complete
-[console]::beep(500, 500)
+"Done installing applications" | Show-Notification -ToastTitle "Winget Script"
 Read-Host -Prompt "Done, press any key to proceed to UWP app uninstallation"
 Write-Host "The following will be uninstalled:"
 foreach ($UWP in $theShitUWP) {
@@ -64,6 +95,5 @@ Write-Host "Removing applications"
 foreach ($UWP in $theShitUWP) {
   Get-AppxPackage $UWP -AllUsers | Remove-AppxPackage
 }
-[console]::beep(500, 500)
-[console]::beep(500, 500)
+"Done uninstalling UWP applications" | Show-Notification -ToastTitle "Winget Script"
 Read-Host -Prompt "Done, press any key to exit"

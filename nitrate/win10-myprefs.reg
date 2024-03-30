@@ -145,3 +145,7 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Siuf\Rules]
 "NumberOfSIUFInPeriod"=dword:00000000
 "PeriodInNanoSeconds"=-
+
+; fix the ICS reboot problem (partially)
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\SharedAccess]
+"EnableRebootPersistConnection"=dword:00000001
